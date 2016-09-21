@@ -31,7 +31,8 @@ class Vertex(object):
 	
 	def get_edge_weight(self, other_vertex):
 		for edge in self.edge_list:
-			if other_vertex == edge[0]:
+			print(str(other_vertex.get_label()) + ' compared to ' + edge[0] )
+			if other_vertex.get_label() == edge[0]:
 				return edge[1]
 		return None
 		
@@ -43,6 +44,7 @@ class Vertex(object):
 
 	def set_visited(self):
 		self.visited = True
+		print ('Vertex ' + self.get_label() + ' is now visted.' )
 
 	def get_weight(self):
 		return self.weight
@@ -97,15 +99,15 @@ class Graph(object):
 		
 		solved = False
 		while not frontier.empty() and not solved:
-			vertex = frontier.get()														#Get frontier
+			vertex = frontier.get()[1]														#Get frontier
 			self.adj_list[vertex].set_visited()										#Set Visited
-			neighbors = self.adj__list[vertex].get_edge_iterator()				#Grab neighbors list.
+			neighbors = self.adj_list[vertex].get_edge_iterator()				#Grab neighbors list.
 			for neighbor in neighbors:
 				if not solved:
-					if not neighbor.is_visited():
-						parent[neighbor.get_label()] = vertex 						#Set parent in dictionary.
-						level[neighbor.get_label()] = level[vertex] + 1			#Set the level in dictionary.
-						edge_weight = vertex.get_edge_weight(neighbor.get_label())	#get the weight of the edge vertex->neighbor
+					if not neighbor[0].is_visited():
+						parent[neighbor[0].get_label()] = vertex 						#Set parent in dictionary.
+						level[neighbor[0].get_label()] = level[vertex] + 1			#Set the level in dictionary.
+						edge_weight = self.adj_list[vertex].get_edge_weight(neighbor[0].get_label())	#get the weight of the edge vertex->neighbor
 						total_weight[neighbor.get_label()] = total_weight[vertex] + edge_weight
 						if neighbor.get_label() == goal:								#Check if solved
 							solved = True
