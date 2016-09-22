@@ -3,6 +3,20 @@
 Spyder Editor
 
 This is a temporary script file.
+
+Comp 569 - Artificial Intelligence
+Assignment 1
+Claveau 
+
+Clifton Porter II
+Fall 2016
+
+Notes
+-------------
+Program currently does not run completely. 
+Issue centers around 'get_other_label' in which the function
+does not recognize 'other_vertex' as a vertex. On the contrary, in 
+'get_edge_weight' trying to use 'other_vertex' as a 
 """
 
 from collections import deque
@@ -20,6 +34,9 @@ class Vertex(object):
 
 	def get_label(self):
 		return self.label
+	
+	def get_other_label(self, other_vertex):
+		other_vertex.get_label()
 
 	def connect(self, other_vertex):
 		self.edge_list.append(other_vertex)
@@ -31,7 +48,7 @@ class Vertex(object):
 	
 	def get_edge_weight(self, other_vertex):
 		for edge in self.edge_list:
-			print(str(other_vertex.get_label()) + ' compared to ' + edge[0] )
+			print(self.get_other_label(other_vertex) + ' compared to ' + edge[0] )
 			if other_vertex.get_label() == edge[0]:
 				return edge[1]
 		return None
@@ -107,7 +124,7 @@ class Graph(object):
 					if not neighbor[0].is_visited():
 						parent[neighbor[0].get_label()] = vertex 						#Set parent in dictionary.
 						level[neighbor[0].get_label()] = level[vertex] + 1			#Set the level in dictionary.
-						edge_weight = self.adj_list[vertex].get_edge_weight(neighbor[0].get_label())	#get the weight of the edge vertex->neighbor
+						edge_weight = self.adj_list[vertex].get_edge_weight(self.adj_list[neighbor[0]].get_label())	#get the weight of the edge vertex->neighbor
 						total_weight[neighbor.get_label()] = total_weight[vertex] + edge_weight
 						if neighbor.get_label() == goal:								#Check if solved
 							solved = True
